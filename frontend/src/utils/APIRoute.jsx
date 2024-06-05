@@ -1,5 +1,5 @@
-export const host = "http://localhost:4500";
-
+// export const host = "http://localhost:4500";
+export const host = "https://movielibrary-9frw.onrender.com";
 export const login=`${host}/auth/login`;
 export const signup= `${host}/auth/signup`;
 export const addlist = `${host}/auth/addlist`;

@@ -34,7 +34,7 @@ useEffect(()=>{
   const handleSearch = () => {
     setLoading(true);
     const API_KEY = import.meta.env.VITE_API_KEY;
-    const encodedQuery = encodeURIComponent(searchQuery);
+    const encodedQuery = encodeURIComponent(searchQuery.trim());
   
     fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${encodedQuery}`)
       .then((response) => response.json())
