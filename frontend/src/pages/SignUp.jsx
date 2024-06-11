@@ -1,4 +1,3 @@
-// src/pages/Signup.js
 import React, { useEffect, useState } from "react";
 import {
   Container,
@@ -6,11 +5,10 @@ import {
   Button,
   Typography,
   Box,
-  Grid,
-  Link,
+  Grid
 } from "@mui/material";
 import { signup } from "../utils/APIRoute";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -201,7 +199,7 @@ function Signup() {
               <span style={{ fontFamily: "cursive" }}>
                 Already have an account?{" "}
               </span>
-              <Link href="/login" variant="body2">
+              <Link to="/login" >
                 Sign In
               </Link>
             </Grid>
