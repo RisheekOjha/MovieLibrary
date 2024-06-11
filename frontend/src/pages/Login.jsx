@@ -1,4 +1,3 @@
-// src/pages/Login.js
 import React, { useState } from "react";
 import {
   Container,
@@ -6,14 +5,13 @@ import {
   Button,
   Typography,
   Box,
-  Grid,
-  Link,
+  Grid
 } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {login} from "../utils/APIRoute";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import NavBar from "../component/Navbar";
 
 
@@ -148,7 +146,7 @@ function Login() {
               <span style={{ fontFamily: "cursive" }}>
                 Don't have an account ?{" "}
               </span>
-              <Link href="/signup" variant="body2">
+              <Link  to="/signup">
                 Sign Up
               </Link>
             </Grid>
