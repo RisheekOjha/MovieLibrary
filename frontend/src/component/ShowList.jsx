@@ -8,13 +8,12 @@ import {
   Menu,
   MenuItem,
   Button,
-  } from "@mui/material";
+} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Swal from "sweetalert2";
 
 function ShowList() {
   const [lists, setLists] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -24,7 +23,6 @@ function ShowList() {
 
   useEffect(() => {
     const fetchLists = async () => {
-      setLoading(true);
       try {
         const email = localStorage.getItem("userdata")
           ? JSON.parse(localStorage.getItem("userdata")).email
@@ -35,14 +33,13 @@ function ShowList() {
         setLists(response.data.lists);
         setError(null);
       } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+        console.log("Error fetching lists:", error);
+        setError("Failed to fetch lists. Please try again later.");
       }
     };
 
     fetchLists();
-  }, []);
+  }, []); // Run only once on component mount
 
   const handleListClick = (list) => {
     navigate(`/list/${list._id}`, { state: { listName: list.listName } });
@@ -80,57 +77,48 @@ function ShowList() {
 
   return (
     <div>
-      {loading ? (
-        <div>Loading...</div>
-      ) : error ? (
-        <h2 style={{ fontFamily: "cursive" }}>{error}</h2>
-      ) : (
-        <>
-          {/* Button to show lists (always visible) */}
+      {/* Button to show lists (always visible) */}
+      <Button
+        variant="contained"
+        onClick={handleClick}
+        style={{
+          background: "linear-gradient(120deg, yellow, orange 10%, yellow)",
+          color: "black",
+        }}
+      >
+        <span style={{ fontWeight: "bolder" }}>Show Lists</span>
+      </Button>
 
-          <Button
-            variant="contained"
-            onClick={handleClick}
-            style={{
-              background: "linear-gradient(120deg,yellow,orange 10%,yellow)",
-              color: "black",
-            }}
-          >
-            <span style={{ fontWeight: "bolder" }}>Show Lists</span>
-          </Button>
-
-          <Menu
-            id="basic-menu"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            MenuListProps={{
-              "aria-labelledby": "basic-button",
-            }}
-                >
-            {lists.length > 0 ? (
-              lists.map((list) => (
-                <MenuItem key={list._id}>
-                  <ListItemText
-                    primary={list.listName}
-                    onClick={() => handleListClick(list)}
-                    style={{ cursor: "pointer",width:"140px" }}
-                  />
-                  <IconButton
-                    edge="end"
-                    aria-label="delete"
-                    onClick={() => handleDelete(list._id, list.listName)}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </MenuItem>
-              ))
-            ) : (
-              <MenuItem disabled>No lists available</MenuItem>
-            )}
-          </Menu>
-        </>
-      )}
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        {lists.length > 0 ? (
+          lists.map((list) => (
+            <MenuItem key={list._id}>
+              <ListItemText
+                primary={list.listName}
+                onClick={() => handleListClick(list)}
+                style={{ cursor: "pointer", width: "140px" }}
+              />
+              <IconButton
+                edge="end"
+                aria-label="delete"
+                onClick={() => handleDelete(list._id, list.listName)}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </MenuItem>
+          ))
+        ) : (
+          <MenuItem disabled>No lists available</MenuItem>
+        )}
+      </Menu>
     </div>
   );
 }
